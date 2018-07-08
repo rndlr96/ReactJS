@@ -1,0 +1,91 @@
+부모 컴포넌트에서 자식 컴포넌트로 데이터를 넘기고자 할 때 : props 이용
+[ App.js ] 	  [ movie.js ]
+
+props 사용법
+dataname = { }; // in App.js -> title이라는 이름의 데이터
+{this.props.dataname} // in child component
+
+
+
+< API로 받아온 많은 양의 데이터를 처리하고자 할 경우 >
+array + map()을 주로 이용 -> API는 주로 json형으로 데이터를 제공하기 때문에 
+
+< props를 통해 부모로 부터 받은 데이터의 데이터 형을 검사하고자 할 경우 >
+PropTypes를 이용한다.
+( 데이터를 받을 때 필수 항목을 지정할 수 있다 -> isRequired )
+
+
+
+
+-------------------------------------------------------------------------------------------
+
+< component lifecycle >
+
+처음 시작할 경우 
+componentWillMount -> render -> componentDidMount : 순서로 자동적으로 진행
+
+update 됬을 경우
+componentWillRecevieProps -> shouldComponentUpdate [ props의 데이터가 변경되었다면 true return ] -> componentWillUpdate -> render -> componentDidUpdate
+
+
+
+
+----------------------------------------------------------------------------------------------
+
+
+state = component 안의 object
+state가 바뀌면 반드시 render가 발생
+
+state에 데이터를 추가하고자 할 경우 ...this.state.[dataname] = 기존의 데이터 목록
+
+
+
+
+---------------------------------------------------------------------------------------------------
+
+stateless component = state 없이 props만 있는 컴포넌트를 의미한다.
+
+funtion으로 컴포넌트를 만들고 단순히 return 시켜주면 된다. 가장 큰 특징으로는 render가 없고 라이프사이클이 존재하지 않는다.
+
+
+----------------------------------------------------------------------------------------------------
+
+Ajax = Asyncronous + javascript + XML(JSON = JavaScript Object Notation)
+
+fetch를 이용해서 url에서 뭔가를 get하는 방법
+
+ajax를 사용하면 처음 fetch한 것이 끝나야 뒤에 내용이 실행됨 -> asynhronous이므로 
+이를 해결하기 위해서 promise를 사용한다.
+
+Await, Async
+ - fetch와 promise를 좀 더 분명하게 해줌
+ - await는 async 안에서만 사용될 수 있다.
+
+=> : 자체적으로 return을 내장하고 있음
+
+
+----------------------------------------------------------------------------------------------------
+
+state 내부 배열 처리하기
+
+ex) 
+import update from 'React-addons-update'  <= Immutability Helpers
+
+let InitialArray = [0,1,2,3,4,5]
+
+let PushArray = update(InitialArray, {
+	$push: array;
+} // insert array last of InitialArray
+
+let DeleteArray = update(InitialArray, {
+	$splice: array; 		// [InitialArray] - [array]
+	$splice: [index, count];
+}
+
+let SetArray = update(InitialArray, {
+	[index]:{
+		field : {$set: "value "},
+		field2: {$set: "value2"}
+	}
+}
+
